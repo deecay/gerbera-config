@@ -25,12 +25,14 @@
     -->
     <alive>180</alive>
     <storage>
-      <sqlite3 enabled="yes">
+      <sqlite3 enabled="no">
         <database-file>gerbera.db</database-file>
       </sqlite3>
-      <mysql enabled="no">
-        <host>localhost</host>
+      <mysql enabled="yes">
+        <host>192.168.0.100</host>
+        <port>3306</port>
         <username>gerbera</username>
+        <password></password>
         <database>gerbera</database>
       </mysql>
     </storage>
