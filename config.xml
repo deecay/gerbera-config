@@ -67,6 +67,13 @@
     recursive="yes" hidden-files="no"/>
 
     </autoscan>
+    
+    <resources case-sensitive="no">
+      <fanart>
+        <add-file name="folder.jpg"/>
+      </fanart>
+    </resources>
+
     <scripting script-charset="UTF-8">
       <common-script>/usr/local/share/gerbera/js/common.js</common-script>
       <playlist-script>/usr/local/share/gerbera/js/playlists.js</playlist-script>
