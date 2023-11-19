@@ -67,7 +67,7 @@
     recursive="yes" hidden-files="no"/>
 
     </autoscan>
-    
+
     <resources case-sensitive="no">
       <fanart>
         <add-file name="folder.jpg"/>
@@ -78,9 +78,10 @@
       <common-script>/usr/local/share/gerbera/js/common.js</common-script>
       <playlist-script>/usr/local/share/gerbera/js/playlists.js</playlist-script>
       <metafile-script>/usr/local/share/gerbera/js/metadata.js</metafile-script>
-      <virtual-layout type="builtin">
+      <virtual-layout type="js">
         <import-script>/usr/local/share/gerbera/js/import.js</import-script>
       </virtual-layout>
+      <custom-script>/usr/local/share/gerbera/js/custom-common.js</custom-script>
     </scripting>
     <mappings>
       <extension-mimetype ignore-unknown="no">
