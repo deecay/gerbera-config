@@ -127,6 +127,17 @@ function addAudio(obj) {
         genre: { title: genre, objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER_MUSIC_GENRE, metaData: [], res: obj.res, aux: obj.aux, refID: obj.id },
         year: { title: date, objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER, metaData: [], res: obj.res, aux: obj.aux, refID: obj.id },
         composer: { title: composer, objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER_MUSIC_COMPOSER, metaData: [], res: obj.res, aux: obj.aux, refID: obj.id },
+
+        // Add year to separate two recordings of the same piece
+        allGenresArtistAlbum: { title: 'Genres/Artist/Album', objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER },
+        albumWithYear: { searchable: false, title: album + ' (' + date + ')', objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER_MUSIC_ALBUM, metaData: [], res: obj.res, aux: obj.aux, refID: obj.id },
+
+        allGenresAlbumArtist: { title: 'Genres/Album/Artist', objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER },
+        albumAsArtist: { searchable: false, title: album, objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER_MUSIC_ARTIST, metaData: [], res: obj.res, aux: obj.aux, refID: obj.id },
+        artistAsAlbum: { searchable: false, title: artist[0] + ' (' + date + ')', objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER_MUSIC_ALBUM, metaData: [], res: obj.res, aux: obj.aux, refID: obj.id },
+
+        allGenresYearAlbum: { title: 'Genres/Year/Album', objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER },
+        albumWithArtist: { searchable: false, title: artist[0] + ' - ' + album, objectType: OBJECT_TYPE_CONTAINER, upnpclass: UPNP_CLASS_CONTAINER_MUSIC_ALBUM, metaData: [], res: obj.res, aux: obj.aux, refID: obj.id },
     };
 
     chain.audio.metaData[M_CONTENT_CLASS] = [ UPNP_CLASS_AUDIO_ITEM ];
@@ -142,6 +153,10 @@ function addAudio(obj) {
     chain.year.metaData[M_DATE] = [ date ];
     chain.year.metaData[M_UPNP_DATE] = [ date ];
     chain.composer.metaData[M_COMPOSER] = [ composer ];
+
+    chain.artistAsAlbum.metaData[M_UPNP_DATE] = obj.metaData[M_UPNP_DATE];
+    chain.albumWithYear.metaData[M_UPNP_DATE] = obj.metaData[M_UPNP_DATE];
+    chain.albumWithArtist.metaData[M_UPNP_DATE] = obj.metaData[M_UPNP_DATE];
 
     var container = addContainerTree([chain.audio, chain.allAudio]);
     addCdsObject(obj, container);
@@ -199,5 +214,14 @@ function addAudio(obj) {
     addCdsObject(obj, container);
 
     container = addContainerTree([chain.audio, chain.allComposers, chain.composer]);
+    addCdsObject(obj, container);
+
+    container = addContainerTree([chain.audio, chain.allGenresArtistAlbum, chain.genre, chain.artist, chain.albumWithYear]);
+    addCdsObject(obj, container);
+
+    container = addContainerTree([chain.audio, chain.allGenresAlbumArtist, chain.genre, chain.albumAsArtist, chain.artistAsAlbum]);
+    addCdsObject(obj, container);
+
+    container = addContainerTree([chain.audio, chain.allGenresYearAlbum, chain.genre, chain.year, chain.albumWithArtist]);
     addCdsObject(obj, container);
 }
